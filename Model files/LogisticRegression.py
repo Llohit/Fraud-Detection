@@ -7,30 +7,21 @@ Original file is located at
     https://colab.research.google.com/drive/1tlQpfb9Lrsv0rzIcArt_kHNWmdTSr5D2
 """
 
-# This Python 3 environment comes with many helpful analytics libraries installed
-# It is defined by the kaggle/python Docker image: https://github.com/kaggle/docker-python
-# For example, here's several helpful packages to load
-
 import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 
-# Input data files are available in the read-only "../input/" directory
-# For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory
 
 import os
 for dirname, _, filenames in os.walk('/kaggle/input'):
     for filename in filenames:
         print(os.path.join(dirname, filename))
 
-# You can write up to 20GB to the current directory (/kaggle/working/) that gets preserved as output when you create a version using "Save & Run All" 
-# You can also write temporary files to /kaggle/temp/, but they won't be saved outside of the current session
 
 from collections import Counter
 
 dtr=pd.read_csv('../input/preprocessed/newdf2.csv')
 dte=pd.read_csv('../input/preprocessed/newtest.csv')
 
-Counter(dtr['isFraud'])
 
 test=pd.read_csv('../input/its-a-fraud/test.csv')
 
@@ -61,13 +52,8 @@ test = test.merge(neww, how='outer',copy=False, on ='TransactionID' )
 
 output = test['IsFraud']
 
-from collections import Counter
-
-Counter(df_res)
-
 output.columns=['Id','isFraud']
 
-print(output)
 
 output=pd.DataFrame(output)
 
@@ -89,7 +75,6 @@ y = dtr['isFraud']
 
 x_train1,x_test1,y_train1,y_test1 = train_test_split(x,y,test_size=0.33, random_state=42)
 
-type(x_test1)
 
 sc = StandardScaler()
 x_train1_sc = sc.fit_transform(x_train1)
@@ -105,7 +90,6 @@ print('test auc with default parameter:',roc_auc_score(y_test1,y_test1_pred[:,1]
 
 df_res1=clf1.predict(X_test)
 
-print(df_res1)
 
 dte['IsFraud']=df_res1
 
@@ -115,16 +99,13 @@ test = test.merge(neww, how='outer',copy=False, on ='TransactionID' )
 
 output = test['IsFraud']
 
-Counter(df_res1)
 
 output.columns=['Id','isFraud']
 
 output=pd.DataFrame(output)
 output.to_csv('output.csv',index=True,index_label='Id')
 
-"""For test, the default parameters are giving score of 0.46349 which is not a good one <br>
-We will try tuning the hyperparameters
-"""
+
 
 alpha = [10**-2,10**-1,10**0,10**1,10**2]
 penalty = ['l1','l2','elasticnet']
@@ -142,14 +123,10 @@ for i in alpha:
 
 """We can see that the score is maximum when alpha=0.01 and penalty=l2"""
 
-Counter(y)
-
 clf1 = LogisticRegression(class_weight='balanced',alpha=0.1,penalty='l2')
 clf1.fit(X_res,y_res)
 
 y_test1_pred = clf1.predict(dte)
-
-Counter(y_test1_pred)
 
 dte['isFraud']=y_test1_pred
 
@@ -169,7 +146,6 @@ test = test.merge(neww, how='outer',copy=False, on ='TransactionID' )
 
 output = test['isFraud']
 
-Counter(df_res1)
 
 output.columns=['Id','isFraud']
 
