@@ -61,7 +61,7 @@ output1.columns=['Id','isFraud']
 output1=pd.DataFrame(output1)
 output1.to_csv('output.csv',index=True,index_label='Id')
 
-"""Using class_wieght="balanced"
+"""Using class_weighht="balanced"
 """
 
 clf1 = DecisionTreeClassifier(class_weight="balanced")
@@ -80,10 +80,7 @@ output2.columns=['Id','isFraud']
 output2=pd.DataFrame(output1)
 output2.to_csv('output.csv',index=True,index_label='Id')
 
-"""The score using default parameters is 0.708<br>
-Using class weight balanced,it is 0.684<br>
-We will try to tune the hyperparameters
-"""
+
 
 from sklearn.model_selection import train_test_split 
 from sklearn.metrics import roc_auc_score
@@ -104,7 +101,7 @@ for depth in max_depth:
         print('test auc:',roc_auc_score(y_test,y_test_pred[:,1]))
         print('======================================================')
 
-"""Trying max_depth=13 and max_feature=log2"""
+"""With max_depth=13  max_feature=log2"""
 
 clf1 = DecisionTreeClassifier(max_depth=13,max_features='log2')
 clf1.fit(X_full,y_full)
