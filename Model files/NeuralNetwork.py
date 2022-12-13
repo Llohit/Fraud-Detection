@@ -47,20 +47,13 @@ from imblearn.over_sampling import SMOTE
 from imblearn.under_sampling import RandomUnderSampler
 from imblearn.pipeline import Pipeline
 
-#over = SMOTE(sampling_strategy=0.1)
-#under = RandomUnderSampler(sampling_strategy=0.5)
+
 rus = RandomUnderSampler(0.4,random_state=42)
-#steps = [('o', over), ('u', under)]
-#pipeline = Pipeline(steps=steps)
+
 
 X_res, y_res = rus.fit_resample(X_train, y_train)
 
-#smote = SMOTE(0.30,random_state=42)
-#X_res, y_res =  smote.fit_resample(X_train,y_train)
-#X_train, X_test, y_train, y_test = train_test_split(X_res, y_res, test_size = 0.25, random_state = 42)
 
-from collections import Counter 
-Counter(y_res)
 
 mlp_gs = MLPClassifier(max_iter=100)
 parameter_space = {
